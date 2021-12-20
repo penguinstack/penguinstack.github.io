@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+  <nav class="navbar sticky-top navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <div class="container">
+        <a class="navbar-brand" href="#">Web Toolkit</a>
+    </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Word Counter</h1>
+
+    <p>This application should help to quickly analyse text. When text is entered or pasted below you will be able to see: 
+      <ul>
+        <li>total word count</li>
+        <li>character count</li>
+        <li>line count</li>
+        <li>most common words</li>
+        <li>most common bigrams</li>
+        <li>most common trigrams</li>
+      </ul>
+    </p>
+    <p>If you find it useful don't forget to bookmark it for later use.</p>
+    <div id="showCounts" class="row" style="display: none;">
+      <div class="col">
+        <h5>Words</h5>
+        <p id="showWord">0</p>
+      </div>
+      <div class="col">
+        <h5>Characters</h5>
+        <p id="showChar">0</p>
+      </div>
+      <div class="col">
+        <h5>Lines</h5>
+        <p id="showLines">0</p>
+      </div>
+    </div>
+
+    <div id="showNgrams" class="row" style="display: none;">
+      <div class="col">
+        <h5>Common</h5>
+        <table id="showMostCommon" class="table">
+        </table>
+      </div>
+      <div class="col">
+        <h5>Bigrams</h5>
+        <table id="showBigrams" class="table">
+        </table>
+      </div>
+      <div class="col">
+        <h5>Trigrams</h5>
+        <table id="showTrigrams" class="table">
+        </table>
+      </div>
+    </div>
+
+    <textarea id="textArea" class="form-control mt-4" aria-label="With textarea" rows="10" placeholder="Type or paste here"></textarea>
+    
+    <p><small>We don't store any text that you enter here, it never even reaches our server.</small></p>
+  </div>
+
+
+
+
+  <script>
+    const textArea = document.getElementById('textArea')
+
+    const showCounts = document.getElementById('showCounts')
+    const showWord = document.getElementById('showWord')
+    const showChar = document.getElementById('showChar')
+    const showLine = document.getElementById('showLine')
+
+    const showNgrams = document.getElementById('showNgrams')
+    const showMostCommon = document.getElementById('showMostCommon')
+    const showBigrams = document.getElementById('showBigrams')
+    const showTrigrams = document.getElementById('showTrigrams')
+
+
+    function commonWords(wordList, n) {
+      let commonWords = {}
+      let commonWordsarr = []
+      wordList.forEach(word => {
+        if (commonWords[word]) {
+          commonWords[word] ++
+        } else (
+          commonWords[word] = 1
+        )
+      })
+      for (let word in commonWords){
+        if (commonWords[word] >= 2){
+          commonWordsarr.push({word: word, count: commonWords[word]})
+        }
+      }
+      return commonWordsarr.sort((a, b) => b.count - a.count).slice(0, n)
+    }
+
+
+    function ngrams(wordList, n) {
+      const ngram = (a, n) => a.slice(0, 1 - n).map((_, i) => a.slice(i, i + n))
+      return ngram(wordList, n).map(gram => gram.join(' '))
+    }
+
+
+    function createTable(data, table, tableRows) {
+      table.innerHTML = ''
+      commonWords(data, tableRows).forEach(word => {
+        const tableRow = document.createElement('tr')
+        const wordData = document.createElement('td')
+        const countData = document.createElement('td')
+        wordData.innerText = word.word
+        countData.innerText = word.count
+        tableRow.appendChild(wordData)
+        tableRow.appendChild(countData)
+        table.appendChild(tableRow)
+      })
+    }
+
+
+    textArea.addEventListener('input', e => {
+
+      let textInput = textArea.value.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").toLowerCase()
+      let wordList = textInput.split(/\s+\b/).map(word => word.trim())
+     
+      createTable(wordList, showMostCommon, 10)
+      createTable(ngrams(wordList, 2), showBigrams, 10)
+      createTable(ngrams(wordList, 3), showTrigrams, 10)
+
+      if (commonWords(wordList, 1).length > 0) {
+        showNgrams.style.display = 'flex'
+      }
+
+      if (textArea.value.length===0) {
+        showCounts.style.display = 'none'
+        showNgrams.style.display = 'none'
+        showWord.innerText = 0
+        showChar.innerText = 0
+        showLine.innerText = 0
+      } else {
+        showCounts.style.display = 'flex'
+        showWord.innerText = wordList.length
+        showChar.innerText = textInput.length
+        showLine.innerText = textArea.value.split(/\r\n|\r|\n/).length
+      }
+    })
+  </script>
+</body>
+</html>
