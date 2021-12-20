@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1977804259285539"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,55 +18,75 @@
   </nav>
 
   <div class="container">
-    <h1>Word Counter</h1>
+    <div class="row">
+      <div class="col-9">
+        <h1>Word Counter</h1>
 
-    <p>This application should help to quickly analyse text. When text is entered or pasted below you will be able to see: 
-      <ul>
-        <li>total word count</li>
-        <li>character count</li>
-        <li>line count</li>
-        <li>most common words</li>
-        <li>most common bigrams</li>
-        <li>most common trigrams</li>
-      </ul>
-    </p>
-    <p>If you find it useful don't forget to bookmark it for later use.</p>
-    <div id="showCounts" class="row" style="display: none;">
-      <div class="col">
-        <h5>Words</h5>
-        <p id="showWord">0</p>
+        <p>This application should help to quickly analyse text. When text is entered or pasted below you will be able to see: 
+          <ul>
+            <li>total word count</li>
+            <li>character count</li>
+            <li>line count</li>
+            <li>most common words</li>
+            <li>most common bigrams</li>
+            <li>most common trigrams</li>
+          </ul>
+        </p>
+        <p>If you find it useful don't forget to bookmark it for later use.</p>
+        <div id="showCounts" class="row" style="display: none;">
+          <div class="col">
+            <h5>Words</h5>
+            <p id="showWord">0</p>
+          </div>
+          <div class="col">
+            <h5>Characters</h5>
+            <p id="showChar">0</p>
+          </div>
+          <div class="col">
+            <h5>Lines</h5>
+            <p id="showLines">0</p>
+          </div>
+        </div>
+
+        <div id="showNgrams" class="row" style="display: none;">
+          <div class="col">
+            <h5>Common</h5>
+            <table id="showMostCommon" class="table">
+            </table>
+          </div>
+          <div class="col">
+            <h5>Bigrams</h5>
+            <table id="showBigrams" class="table">
+            </table>
+          </div>
+          <div class="col">
+            <h5>Trigrams</h5>
+            <table id="showTrigrams" class="table">
+            </table>
+          </div>
+        </div>
+
+        <textarea id="textArea" class="form-control mt-4" aria-label="With textarea" rows="10" placeholder="Type or paste here"></textarea>
+        
+        <p><small>We don't store any text that you enter here, it never even reaches our server.</small></p>
+
+
       </div>
-      <div class="col">
-        <h5>Characters</h5>
-        <p id="showChar">0</p>
-      </div>
-      <div class="col">
-        <h5>Lines</h5>
-        <p id="showLines">0</p>
+      <div class="col-3">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1977804259285539"
+               crossorigin="anonymous"></script>
+        <!-- Sidebar -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1977804259285539"
+             data-ad-slot="7384661307"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </div>
     </div>
-
-    <div id="showNgrams" class="row" style="display: none;">
-      <div class="col">
-        <h5>Common</h5>
-        <table id="showMostCommon" class="table">
-        </table>
-      </div>
-      <div class="col">
-        <h5>Bigrams</h5>
-        <table id="showBigrams" class="table">
-        </table>
-      </div>
-      <div class="col">
-        <h5>Trigrams</h5>
-        <table id="showTrigrams" class="table">
-        </table>
-      </div>
-    </div>
-
-    <textarea id="textArea" class="form-control mt-4" aria-label="With textarea" rows="10" placeholder="Type or paste here"></textarea>
-    
-    <p><small>We don't store any text that you enter here, it never even reaches our server.</small></p>
   </div>
 
 
